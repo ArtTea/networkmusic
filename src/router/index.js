@@ -9,7 +9,8 @@ const Login = () => import('@/views/login/login.vue')
 const Member = () => import('@/views/member/member.vue')
 const Video = () => import('@/views/video/video.vue')
 const VideoList = () => import('@/views/video/components/videolist.vue')
-const MvList = () => import('@/views/video/components/mvlist.vue')
+const Mv = () => import('@/views/video/components/mv.vue')
+const MvList = () => import('@/views/video/mvlist.vue')
 const MusicListDetail = () => import('@/views/musiclistdetail/musiclistdetail.vue')
 const SingerListDetail = () => import('@/views/singerlistdetail/singerlistdetail.vue')
 const routes = [
@@ -37,9 +38,11 @@ const routes = [
         redirect: '/video/videolist',
         children: [
           { path: '/video/videolist', component: VideoList },
-          { path: '/video/mvlist', component: MvList }
+          { path: '/video/mv', component: Mv }
         ]
       },
+      // 所有MV列表
+      { path: '/video/mv/mvlist', component: MvList },
       // 歌单详情
       { path: '/musiclistdetail/:id', component: MusicListDetail },
       // 歌手详情

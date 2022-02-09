@@ -29,7 +29,7 @@
 <script>
 import { getAllSongList } from '@/api/discover.js'
 import { getPlaylistDetail } from '@/api/playlist.js'
-import { ref } from '@vue/reactivity'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 export default {
   name: 'Ranking',

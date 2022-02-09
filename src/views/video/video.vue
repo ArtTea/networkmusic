@@ -15,7 +15,7 @@ export default {
     // nav列表的静态数据
     const musicNavList = [
       { id: 0, name: '视频', path: '/video/videolist' },
-      { id: 1, name: 'MV', path: '/video/mvlist' }
+      { id: 1, name: 'MV', path: '/video/mv' }
     ]
     return {
       musicNavList
@@ -25,6 +25,6 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less" scoped>
 
 </style>

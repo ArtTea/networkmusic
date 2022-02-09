@@ -20,9 +20,8 @@
 <script>
 import { useStore } from 'vuex'
 import { getLogin } from '@/api/user.js'
-import { reactive, ref } from '@vue/reactivity'
+import { reactive, ref, watch } from 'vue'
 import { onClickOutside } from '@vueuse/core'
-import { watch } from '@vue/runtime-core'
 import { ElMessage } from 'element-plus'
 export default {
   name: 'App',

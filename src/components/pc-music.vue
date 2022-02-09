@@ -7,7 +7,10 @@
   @timeupdate="updateTime"
   ></audio>
   <div class="cover" >
-    <img v-if="currMusic" :src="currMusic.al.picUrl" alt="">
+    <div @click="upSong" class="images" v-if="currMusic">
+      <i class="iconfont icon-xiangshangjiantou"></i>
+      <img  :src="currMusic.al.picUrl +'?param=100y100'" alt="">
+    </div>
     <img v-else src="@/assets/images/defaulTavatar.jpg" alt="">
     <div class="body" v-if="currMusic">
       <div class="title">{{currMusic.name}}</div>
@@ -49,21 +52,30 @@
     <i class="fr iconfont icon-liebiao"></i>
     </div>
   </div>
+
 </div>
+ <!-- el-抽屉 -->
+  <el-drawer
+  v-model="drawer"
+  direction='btt'
+  size="100%"
+  :with-header="false">
+  <!-- <el-scrollbar> -->
+    <div class="drawer-body"></div>
+  <!-- </el-scrollbar> -->
+  </el-drawer>
 </template>
 
 <script>
 import { ref, watch } from 'vue'
 import { useStore } from 'vuex'
 import { getMusicInfo } from '@/api/playlist.js'
-import { useRoute } from 'vue-router'
 import { handleMusicTime } from '@/hooks'
 import { getSongDetail } from '@/api/songInfo.js'
 export default {
   naem: 'Music',
   setup () {
     const store = useStore()
-    const router = useRoute()
     // 存放请求回来的音乐数据
     const musicInfo = ref('')
     // 存放vuex中的profile数据
@@ -83,30 +95,24 @@ export default {
     // 切换歌曲时的函数
     const updateMisic = (id) => {
       // 请求音频地址
-      console.log(profile.value.userCurrsongList)
       getMusicInfo(id).then(data => {
         musicInfo.value = data.data[0]
       })
       // 通过id筛选出当前播放音乐的的姓名和标题
-      if (profile.value.userCurrsongListId === parseInt(router.params.id)) {
-        // currMusic.value = profile.value.userCurrsongList.find(item => {
-        //   return item.id === profile.value.userCurrMusicId
-        // })
-        getSongDetail(profile.value.userCurrMusicId).then(data => {
-          console.log(data.songs[0])
-          currMusic.value = data.songs[0]
-          console.log(currMusic.value.dt)
-          maxTime.value = currMusic.value.dt
-        })
-      }
+      getSongDetail(profile.value.userCurrMusicId).then(data => {
+        currMusic.value = data.songs[0]
+        maxTime.value = currMusic.value.dt
+      })
     }
     // 确认音频当前播放时长
     const updateTime = () => {
       time.value = Math.floor(target.value.currentTime)
+      console.log(time.value)
     }
     const changePlayMusic = () => {
       if (musicInfo.value) {
         toggle.value = !toggle.value
+        console.log(toggle.value)
         toggle.value ? playMusic() : pauseMusic()
       }
     }
@@ -131,12 +137,21 @@ export default {
     // 监听音乐id的变化
     watch(() => profile.value.userCurrMusicId, (newVal) => {
       if (profile.value.isPlay) {
+        currMusic.value = null
         updateMisic(newVal)
-        console.log('1')
+        console.log(newVal)
+        toggle.value = profile.value.isPlay
       }
       // const time  = target.audioPlayer.currentTime
       // 确定音乐播放的状态
     }, { immediate: true })
+
+    // 抽屉函数的位置
+    const drawer = ref(false)
+    const upSong = () => {
+      drawer.value = !drawer.value
+    }
+
     return {
       currMusic,
       musicInfo,
@@ -147,7 +162,9 @@ export default {
       maxTime,
       changePlayMusic,
       changevolume,
-      volume
+      volume,
+      upSong,
+      drawer
     }
   }
 }
@@ -155,6 +172,8 @@ export default {
 
 <style lang="less" scoped>
 .container{
+  position: absolute;
+  z-index: 2009;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -162,20 +181,47 @@ export default {
   background-color: #fff  ;
   width: 100%;
   .cover{
+    position: relative;
     padding-left: 15px;
     width: 250px;
     font-size: 14px;
     display: flex;
+    .images{
+      width: 50px;
+      .icon-xiangshangjiantou{
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        font-weight: 600;
+        display: inline-block;
+        color: #999;
+        font-size: 25px;
+        text-align: center;
+        line-height: 50px;
+        border-radius: 10px;
+        background: #000;
+        backdrop-filter: blur(3px);
+        -webkit-backdrop-filter: blur(3px);
+        opacity: 0;
+        &:hover{
+          opacity: 0.6;
+          transition:all .3s
+        }
+      }
+    }
     img{
-      display: block;
       border-radius: 10px;
       width: 50px;
       height: 50px;
     }
     .body{
+      width: 170px;
       padding-left: 5px;
+      flex: 1;
       .title{
         white-space:nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
       .name{
         margin-top: 8px;
@@ -260,6 +306,11 @@ export default {
       }
     }
   }
+}
+.drawer-body{
+  height: 100%;
+  background:linear-gradient(to top,#fff,#b6b6b6);
+  padding: 20px;
 }
 
 </style>

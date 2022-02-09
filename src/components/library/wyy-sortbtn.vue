@@ -8,12 +8,22 @@
         <div class="panel" v-if="visible">
           <el-scrollbar>
             <ul class=" btn-body" v-if="allcategories || allSort">
-              <li style="border-bottom:1px solid #ccc"><a href="javascript:;">全部</a></li>
+              <li class="all" style="">
+                <span
+                @click="changeName('全部')"
+                class="btn"
+                :class="{active:'全部'===activeName}"
+                >全部</span>
+              </li>
               <li class="sort-class" v-for="(item,i) in allcategories" :key="item" >
                 <div class="title">{{item}}</div>
                 <div class="sort">
                   <div class="left-contianer" v-for="sort in allSort[i]" :key="sort.id">
-                    <span @click="changeName(sort.name)" class="btn" :class="{active:sort.name===activeName}">{{sort.name}}</span>
+                    <span
+                    @click="changeName(sort.name)"
+                    class="btn"
+                    :class="{active:sort.name===activeName}"
+                    >{{sort.name}}</span>
                   </div>
                 </div>
               </li>
@@ -22,7 +32,12 @@
         </div>
       </div>
     <div class=" fr right-contianer" v-if="hotSort">
-      <span @click="changeName(item.name)" class="btn" :class="{active:item.name===activeName}"  v-for="item in hotSort" :key="item.id">{{item.name}}</span>
+      <span
+      @click="changeName(item.name)"
+      class="btn"
+      :class="{active:item.name===activeName}"
+      v-for="item in hotSort"
+      :key="item.id">{{item.name}}</span>
     </div>
    </div>
 </template>
@@ -100,6 +115,7 @@ export default {
      // 左侧按钮
   .panel{
     position: absolute;
+    z-index: 1;
     top: 36px;
     left: -20px;
     background-color: #fff;
@@ -116,15 +132,21 @@ export default {
     }
     .btn-body{
       display: flex;
+      font-size: 12px;
       flex-direction: column;
-      width: 600px;
+      width: 700px;
       height: 400px;
+      .all{
+        border-bottom:1px solid #ccc;
+        a{
+          color: #ccc;
+        }
+      }
     >li{
-    padding:20px 20px  0 ;
-      min-height: 60px;
+    padding:20px  ;
+
     }
     .sort-class{
-      margin-top: 20px;
       display: flex;
       .title{
         flex: 1;

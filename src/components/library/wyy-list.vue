@@ -14,7 +14,13 @@
       </thead>
       <tbody>
         <tr @click="checked(item.id)" @dblclick="playing(item.id)" :class="{active:activeName===item.id}" class="listRow" v-for="(item,i) in newlist" :key="item.id">
-          <td class="index">{{i+1}}</td>
+
+          <td  class="index">
+            <span v-if="isplay===item.id" class="isplay">
+            <i class="iconfont icon-yinlianglabashengyin"></i>
+            </span>
+            <span v-else>{{i+1}}</span>
+          </td>
           <!-- <td class="hot" v-if="list.trackIds[i].ratio"><span >{{list.trackIds[i].ratio +"%"}}</span></td> -->
           <td class="download">
             <i class="iconfont icon-aixin1"></i>
@@ -50,6 +56,7 @@ export default {
   setup (props) {
     const store = useStore()
     const newlist = ref({})
+    const isplay = ref(null)
     if (props.isvisible) {
       // eslint-disable-next-line vue/no-setup-props-destructure
       newlist.value = props.list.tracks
@@ -64,7 +71,8 @@ export default {
     // 鼠标双击传递当前音乐的id
     const playing = (id) => {
       activeName.value = id
-      console.log(id)
+      isplay.value = id
+      console.log(isplay.value)
       store.commit('user/setMusicId', id)
       store.commit('user/setPalyStatus', true)
     }
@@ -73,13 +81,19 @@ export default {
       handleMusicTime,
       activeName,
       playing,
-      checked
+      checked,
+      isplay
     }
   }
 }
 </script>
 
 <style lang="less" scoped>
+.isplay{
+  i{
+    color: #EC4141 ;
+  }
+}
 .subtitle{
   color: #ccc;
   font-size: 12px;
