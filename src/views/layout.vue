@@ -53,7 +53,7 @@ export default {
       flex: 1;
       min-width: 220px;
       height: calc(100vh - 140px);
-       border-right : 1px solid #E0E0E0;
+      border-right : 1px solid #E0E0E0;
 
     }
     .main{
@@ -63,13 +63,13 @@ export default {
       height: calc( 100vh - 140px);
     }
   }
-  .homg-footer{
-    height: 70px;
     .footer{
+      height: 60px;
+      background-color: #fff;
+      overflow: hidden;
       bottom: 0;
       padding: 0;
     }
   }
-}
 
 </style>

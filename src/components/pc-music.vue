@@ -9,7 +9,7 @@
   <div class="cover" >
     <div @click="upSong" class="images" v-if="currMusic">
       <i class="iconfont icon-xiangshangjiantou"></i>
-      <img  :src="currMusic.al.picUrl +'?param=100y100'" alt="">
+      <img :src="currMusic.al.picUrl +'?param=100y100'" alt="">
     </div>
     <img v-else src="@/assets/images/defaulTavatar.jpg" alt="">
     <div class="body" v-if="currMusic">
@@ -31,7 +31,12 @@
     <div class="progressBar">
       <span>{{handleMusicTime(time*1000)}}</span>
         <div class="block">
-          <el-slider v-model="time" :show-tooltip="false" :max="maxTime/1000"></el-slider>
+          <el-slider
+          v-model="time"
+          :show-tooltip="false"
+          :max="maxTime/1000"
+          @change='changetime'
+          ></el-slider>
         </div>
       <span>{{handleMusicTime(maxTime)}}</span>
     </div>
@@ -60,9 +65,9 @@
   direction='btt'
   size="100%"
   :with-header="false">
-  <!-- <el-scrollbar> -->
-    <div class="drawer-body"></div>
-  <!-- </el-scrollbar> -->
+  <el-scrollbar >
+    <WyySongPanel v-if="drawer" @clickdown="clickdown" :currMusic="currMusic"/>
+  </el-scrollbar>
   </el-drawer>
 </template>
 
@@ -106,8 +111,12 @@ export default {
     }
     // 确认音频当前播放时长
     const updateTime = () => {
-      time.value = Math.floor(target.value.currentTime)
       console.log(time.value)
+      time.value = Math.floor(target.value.currentTime)
+    }
+    // 拖拽进度条改变音频时间
+    const changetime = (time) => {
+      target.value.currentTime = time
     }
     const changePlayMusic = () => {
       if (musicInfo.value) {
@@ -151,6 +160,10 @@ export default {
     const upSong = () => {
       drawer.value = !drawer.value
     }
+    // 点击关闭抽屉
+    const clickdown = (status) => {
+      drawer.value = status
+    }
 
     return {
       currMusic,
@@ -164,7 +177,9 @@ export default {
       changevolume,
       volume,
       upSong,
-      drawer
+      drawer,
+      clickdown,
+      changetime
     }
   }
 }
@@ -172,8 +187,10 @@ export default {
 
 <style lang="less" scoped>
 .container{
+  min-width: 1200px;
   position: absolute;
-  z-index: 2009;
+  bottom: 0;
+  z-index: 3000;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -287,7 +304,6 @@ export default {
     height: 60px;
     width: 300px;
     margin-right: 20px;
-
     .volume{
       flex: 1;
       padding-right: 15px;
@@ -297,20 +313,17 @@ export default {
     }
     .block{
       flex: 3;
+        min-width: 100px;
+
     }
     .list{
       flex: 1;
       >i{
       font-size:20px;
-
+      margin-left: 10px;
       }
     }
   }
-}
-.drawer-body{
-  height: 100%;
-  background:linear-gradient(to top,#fff,#b6b6b6);
-  padding: 20px;
 }
 
 </style>

@@ -8,7 +8,7 @@
             <i class="iconfont icon-angle-right "></i>
           </template>
           <template #panelbody>
-            <WyyItem :List="recommendList" @clickWyyItem='clickWyyItem'/>m>
+            <WyyItem :List="recommendList" @clickWyyItem='clickWyyItem'/>
           </template>
         </WyyPanel>
       </div>
