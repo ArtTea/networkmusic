@@ -1,24 +1,22 @@
-# networkmusic
+### 仿网易云音乐
 
-## Project setup
+#### 安装依赖包
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+##### 运行指令
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+##### 打包指令
 ```
 npm run build
 ```
 
-### Lints and fixes files
+##### 注意事项本项目依赖于NeteaseCloudMusicApi
 ```
-npm run lint
+git clone https://github.com/Binaryify/NeteaseCloudMusicApi
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).

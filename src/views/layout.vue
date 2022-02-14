@@ -51,8 +51,8 @@ export default {
     display: flex;
     .aside{
       flex: 1;
-      min-width: 220px;
       height: calc(100vh - 140px);
+      min-width: 220px;
       border-right : 1px solid #E0E0E0;
 
     }
@@ -64,7 +64,7 @@ export default {
     }
   }
     .footer{
-      height: 60px;
+      height: 80px;
       background-color: #fff;
       overflow: hidden;
       bottom: 0;

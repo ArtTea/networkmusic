@@ -188,14 +188,13 @@ export default {
 <style lang="less" scoped>
 .container{
   min-width: 1200px;
-  position: absolute;
-  bottom: 0;
+  height: 80px;
   z-index: 3000;
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-top: 1px solid #E0E0E0;
-  background-color: #fff  ;
+  background-color: #fff ;
   width: 100%;
   .cover{
     position: relative;
@@ -290,7 +289,7 @@ export default {
       width: 600px;
       >span{
         text-align: center;
-        width: 60px;
+        width: 70px;
       }
       .block{
         flex: 1;
@@ -301,7 +300,7 @@ export default {
     display: flex;
     justify-content:space-between;
     align-items: center;
-    height: 60px;
+    height: 70px;
     width: 300px;
     margin-right: 20px;
     .volume{
