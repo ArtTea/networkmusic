@@ -46,8 +46,8 @@ export default {
     // 登录区域
     const store = useStore()
     const from = reactive({
-      phone: '18267175307',
-      password: 'hjw18267175307'
+      phone: '',
+      password: ''
     })
     const login = () => {
       // 验证手机号码格式是否正确
